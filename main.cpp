@@ -4,6 +4,7 @@
 
 int main() {
     Board board;
+
     Move move;
     
     std::cout << "To make a move, please enter the row and then column of your move." << std::endl;

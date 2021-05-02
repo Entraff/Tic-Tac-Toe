@@ -6,19 +6,21 @@
 
 class Board {
     private:
-        char player;
-        std::vector<std::vector<char>> board; 
+        Cell player;
+        std::vector<std::vector<Cell>> board; 
 
+        void printRow(const std::vector<Cell>& row);
         // CheckWin() is a wrapper for the 3 fucntions below
         bool checkHorizontal();
         bool checkVertical();
         bool checkDiagnol();
     public:
         Board();
-        Board(const std::vector<std::vector<char>>&  board_);
+        Board(const std::vector<std::vector<Cell>>&  board_);
 
         void printBoard();
         bool isEmpty(const Move& move);
+        bool checkDraw();
         void alternatePlayer();
         char getPlayer();
         void makeMove(const Move& move);

@@ -4,54 +4,72 @@
 #include "type.h"
 
 Board::Board():
-    player('X'),
-    board(std::vector<std::vector<char>>(3, 
-          std::vector<char>(3, '-')))
+    player(PLAYER_X),
+    board(std::vector<std::vector<Cell>>(3, 
+          std::vector<Cell>(3, EMPTY)))
     {}
 
-Board::Board(const std::vector<std::vector<char>>& board_):
-    player('X'),
+Board::Board(const std::vector<std::vector<Cell>>& board_):
+    player(PLAYER_X),
     board(board_)
     {}
 
 void Board::alternatePlayer() {
-    player = player == 'X' ? 'O' : 'X';
+    player = player == PLAYER_X ? PLAYER_O : PLAYER_X;
+}
+
+void Board::printRow(const std::vector<Cell>& row) {
+    std::cout << ' ';
+    for (int column = 0; column < 2; ++column) {
+        std::cout << cellToChar(row[column]) << " | ";
+    }
+    std::cout << cellToChar(row[row.size() - 1]) << std::endl;
 }
 
 void Board::printBoard() {
-    std::cout << ' ' << board[0][0] << " | " << board[0][1] << " | " << board[0][2] << std::endl;
-    std::cout << "---" << "+" << "---" << "+" << "---" << std::endl;
-    std::cout << ' ' << board[1][0] << " | " << board[1][1] << " | " << board[1][2] << std::endl;
-    std::cout << "---" << "+" << "---" << "+" << "---" << std::endl;
-    std::cout << ' ' << board[2][0] << " | " << board[2][1] << " | " << board[2][2] << std::endl;
+    for (int row = 0; row < 2; ++row) {
+        printRow(board[row]);
+        std::cout << "---+---+---" << std::endl;
+    }
+    printRow(board[board.size() - 1]);
 }
 
 char Board::getPlayer() {
-    return player;
+    return cellToChar(player);
 }
 
 bool Board::isEmpty(const Move& move) {
-    return board[move.row][move.column] == '-';
+    return board[move.row][move.column] == EMPTY;
+}
+
+bool Board::checkDraw() {
+    int row, column;
+    for (row = 0; row < 3; ++row) {
+        for (column = 0; column < 3; ++column) {
+            if (board[row][column] == EMPTY) return false;
+        }
+    }
+    return true;
 }
 
 bool Board::checkHorizontal() {
     int row, column;
     bool rowIsWinning;
-    char comparator, currentCell;
+    Cell comparator, currentCell;
     // Iterates through the rows
     for (row = 0; row < 3; ++row) {
         rowIsWinning = true;
         comparator = board[row][0];
         // If the first element of the row is empty, the entire row
         // is not winning, and will go onto the next row
-        if (comparator == '-') continue;
+        if (comparator == EMPTY) continue;
 
         // Iterates through columns
         for (column = 1; column < 3; ++column) {
             currentCell = board[row][column];
             // If the cell is empty or isn't the same as the first cell of the row
             // that row is not winning and will stop iterating through the row
-            if (currentCell == '-' || currentCell != comparator) {
+            if (currentCell == EMPTY || currentCell != comparator) {
                 rowIsWinning = false;
                 break;
             } 
@@ -64,21 +82,21 @@ bool Board::checkHorizontal() {
 bool Board::checkVertical() {
     int row, column;
     bool columnIsWinning;
-    char comparator, currentCell;
+    Cell comparator, currentCell;
     // Iterates through the columns 
     for (column = 0; column < 3; ++column) {
         columnIsWinning = true;
         comparator = board[0][column];
         // If the first element of the column is empty, the entire row
         // is not winning, and will go onto the next column 
-        if (comparator == '-') continue;
+        if (comparator == EMPTY) continue;
 
         // Iterates through rows 
         for (row = 1; row < 3; ++row) {
             currentCell = board[row][column];
             // If the cell is empty or isn't the same as the first cell of the column 
             // that row is not winning and will stop iterating through the column 
-            if (currentCell == '-' || currentCell != comparator) {
+            if (currentCell == EMPTY || currentCell != comparator) {
                 columnIsWinning = false;
                 break;
             } 
@@ -89,9 +107,9 @@ bool Board::checkVertical() {
 }
 
 bool Board::checkDiagnol() {
-    const char LTRComparator = board[0][0];
-    const char RTLComparator = board[0][board.size() - 1];
-    char LTRCell, RTLCell;
+    const Cell LTRComparator = board[0][0];
+    const Cell RTLComparator = board[0][board.size() - 1];
+    Cell LTRCell, RTLCell;
     bool LTRWinning = true;
     bool RTLWinning = true;
 
@@ -100,9 +118,9 @@ bool Board::checkDiagnol() {
     for (int row = 1; row < board.size(); ++row) {
         LTRCell = board[row][row];
         RTLCell = board[row][RTLPtr--];
-        if (LTRCell == '-' || LTRCell != LTRComparator)
+        if (LTRCell == EMPTY || LTRCell != LTRComparator)
             LTRWinning = false;
-        if (RTLCell == '-' || RTLCell != RTLComparator)
+        if (RTLCell == EMPTY || RTLCell != RTLComparator)
             RTLWinning = false;
     }
     return LTRWinning || RTLWinning;
