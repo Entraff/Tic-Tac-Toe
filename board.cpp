@@ -30,8 +30,8 @@ char Board::getPlayer() {
     return player;
 }
 
-bool Board::isEmpty(const int& row, const int& column) {
-    return board[row][column] == '-';
+bool Board::isEmpty(const Move& move) {
+    return board[move.row][move.column] == '-';
 }
 
 bool Board::checkHorizontal() {
@@ -112,6 +112,6 @@ bool Board::checkWin() {
     return checkHorizontal() || checkDiagnol() || checkVertical();
 }
 
-void Board::makeMove(const int& row, const int& column) {
-    board[row][column] = player;    
+void Board::makeMove(const Move& move) {
+    board[move.row][move.column] = player;    
 }

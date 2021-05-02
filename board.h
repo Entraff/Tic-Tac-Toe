@@ -2,6 +2,7 @@
 #define BOARD_H
 
 #include <vector>
+#include "type.h"
 
 class Board {
     private:
@@ -14,12 +15,13 @@ class Board {
         bool checkDiagnol();
     public:
         Board();
-        Board(const std::vector<std::vector<char>>&  _board);
+        Board(const std::vector<std::vector<char>>&  board_);
+
         void printBoard();
-        bool isEmpty(const int& row, const int& column);
+        bool isEmpty(const Move& move);
         void alternatePlayer();
         char getPlayer();
-        void makeMove(const int& row, const int& column);
+        void makeMove(const Move& move);
         bool checkWin();
 };
 
