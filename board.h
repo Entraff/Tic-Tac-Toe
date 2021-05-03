@@ -17,6 +17,7 @@ class Board {
     public:
         Board();
         Board(const std::vector<std::vector<Cell>>&  board_);
+        Board(const int& sideLength);
 
         void printBoard();
         bool isEmpty(const Move& move);
