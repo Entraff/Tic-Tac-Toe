@@ -12,6 +12,7 @@ class Board {
     private:
         Cell player;
         std::vector<std::vector<Cell>> board; 
+        int sideLength;
 
         void printRow(const std::vector<Cell>& row);
         bool checkDraw();
@@ -21,8 +22,6 @@ class Board {
         bool checkVertical();
         bool checkDiagnol();
     public:
-        Board();
-        Board(const std::vector<std::vector<Cell>>&  board_);
         Board(const int& sideLength);
 
         void printBoard();

@@ -3,43 +3,42 @@
 #include "board.h"
 #include "type.h"
 
+using std::vector;
 
-Board::Board():
-    player(PLAYER_X),
-    board(std::vector<std::vector<Cell>>(3, 
-          std::vector<Cell>(3, EMPTY)))
-    {}
+// TODO Make a "isValidMove" function to filter user input
 
-Board::Board(const std::vector<std::vector<Cell>>& board_):
-    player(PLAYER_X),
-    board(board_)
-    {}
+Board::Board(const int& sideLength_) {
+    this->player = PLAYER_X;
+    this->sideLength = sideLength_;
+    this->board = vector<vector<Cell>>(sideLength_,
+                         vector<Cell>(sideLength_, EMPTY));
+}
 
-Board::Board(const int& sideLength):
-    player(PLAYER_X),
-    board(std::vector<std::vector<Cell>>(sideLength,
-                      std::vector<Cell>(sideLength, EMPTY)))
-    {}
+void Board::printRow(const std::vector<Cell>& row) {
+    int finalElement = sideLength - 1;
+    std::cout << ' ';
+    for (int column = 0; column < finalElement; ++column) {
+        std::cout << cellToChar(row[column]) << " | ";
+    }
+    std::cout << cellToChar(row[finalElement]) << std::endl;
+}
+
+void Board::printBoard() {
+    int finalElement = sideLength - 1;
+    int row, separator;
+    for (row = 0; row < finalElement; ++row) {
+        printRow(board[row]);
+        for (separator = 0; separator < finalElement; ++separator) {
+            std::cout << "---+";
+        } 
+        std::cout << "---" << std::endl;
+    }
+    printRow(board[finalElement]);
+}
 
 
 void Board::alternatePlayer() {
     player = player == PLAYER_X ? PLAYER_O : PLAYER_X;
-}
-
-void Board::printRow(const std::vector<Cell>& row) {
-    std::cout << ' ';
-    for (int column = 0; column < 2; ++column) {
-        std::cout << cellToChar(row[column]) << " | ";
-    }
-    std::cout << cellToChar(row[row.size() - 1]) << std::endl;
-}
-
-void Board::printBoard() {
-    for (int row = 0; row < 2; ++row) {
-        printRow(board[row]);
-        std::cout << "---+---+---" << std::endl;
-    }
-    printRow(board[board.size() - 1]);
 }
 
 char Board::getPlayer() {

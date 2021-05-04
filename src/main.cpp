@@ -2,12 +2,20 @@
 #include <vector>
 #include "board.h"
 
+using std::cout;
+using std::cin;
+using std::endl;
+
 int main() {
-    Board board;
+    int boardLength;
+    cout << "Please enter how many units long you want the board to be" << endl;
+    cin >> boardLength;
+
     BoardState currentState;
     Move move;
-    
-    std::cout << "To make a move, please enter the row and then column of your move." << std::endl;
+    Board board(boardLength);
+
+    cout << "To make a move, please enter the row and then column of your move." << endl;
     while (true) {
         currentState = board.getState();
         // End the game loop if an ending position is found
@@ -15,14 +23,14 @@ int main() {
 
         board.alternatePlayer();
 
-        std::cout << "Player " << board.getPlayer() << " to move!" << std::endl;
+        std::cout << "Player " << board.getPlayer() << " to move!" << endl;
         board.printBoard();
         
         while(true) {
-            std::cin >> move.row >> move.column;
+            cin >> move.row >> move.column;
 
             if (board.isEmpty(move)) break;
-            else std::cout << "That cell is already occupied! Please a different one!" << std::endl;
+            else cout << "That cell is already occupied! Please a different one!" << endl;
         }
 
         board.makeMove(move);
@@ -30,10 +38,10 @@ int main() {
 
     switch (currentState) {
         case WIN:
-            std::cout << "Player " << board.getPlayer() << " has won the game!" << std::endl;
+            cout << "Player " << board.getPlayer() << " has won the game!" << endl;
             break;
         case DRAW:
-            std::cout << "Draw! No one has won the game." << std::endl;
+            cout << "Draw! No one has won the game." << endl;
             break;
     }
 

@@ -4,8 +4,8 @@
 
 bool Board::checkDraw() {
     int row, column;
-    for (row = 0; row < 3; ++row) {
-        for (column = 0; column < 3; ++column) {
+    for (row = 0; row < sideLength; ++row) {
+        for (column = 0; column < sideLength; ++column) {
             if (board[row][column] == EMPTY) return false;
         }
     }
@@ -17,7 +17,7 @@ bool Board::checkHorizontal() {
     bool rowIsWinning;
     Cell comparator, currentCell;
     // Iterates through the rows
-    for (row = 0; row < 3; ++row) {
+    for (row = 0; row < sideLength; ++row) {
         rowIsWinning = true;
         comparator = board[row][0];
         // If the first element of the row is empty, the entire row
@@ -25,7 +25,7 @@ bool Board::checkHorizontal() {
         if (comparator == EMPTY) continue;
 
         // Iterates through columns
-        for (column = 1; column < 3; ++column) {
+        for (column = 1; column < sideLength; ++column) {
             currentCell = board[row][column];
             // If the cell is empty or isn't the same as the first cell of the row
             // that row is not winning and will stop iterating through the row
@@ -44,7 +44,7 @@ bool Board::checkVertical() {
     bool columnIsWinning;
     Cell comparator, currentCell;
     // Iterates through the columns 
-    for (column = 0; column < 3; ++column) {
+    for (column = 0; column < sideLength; ++column) {
         columnIsWinning = true;
         comparator = board[0][column];
         // If the first element of the column is empty, the entire row
@@ -52,7 +52,7 @@ bool Board::checkVertical() {
         if (comparator == EMPTY) continue;
 
         // Iterates through rows 
-        for (row = 1; row < 3; ++row) {
+        for (row = 1; row < sideLength; ++row) {
             currentCell = board[row][column];
             // If the cell is empty or isn't the same as the first cell of the column 
             // that row is not winning and will stop iterating through the column 
@@ -73,7 +73,7 @@ bool Board::checkDiagnol() {
     bool LTRWinning = true;
     bool RTLWinning = true;
 
-    int RTLPtr = board.size() - 2;
+    int RTLPtr = sideLength - 2;
     
     for (int row = 1; row < board.size(); ++row) {
         LTRCell = board[row][row];
