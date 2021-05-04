@@ -1,2 +1,7 @@
-TicTacToe: main.cpp board.cpp type.cpp board_states.cpp
-	g++ -o main.out main.cpp board.cpp type.cpp board_states.cpp
+.SUFFIXES:
+
+main: src/board.o src/board_states.o src/main.o src/type.o
+	g++ -o $@ $^
+
+%.o: %.cpp
+	g++ -I ./include -o $@ -c $<
