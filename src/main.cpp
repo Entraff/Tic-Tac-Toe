@@ -9,6 +9,7 @@ using std::endl;
 int main() {
     int boardLength;
     cout << "Please enter how many units long you want the board to be" << endl;
+
     while (true) {
         cin >> boardLength;
         if (boardLength >= 2) break;
@@ -26,7 +27,6 @@ int main() {
         if (currentState != PLAYING) break;
 
         board.alternatePlayer();
-
         std::cout << "Player " << board.getPlayer() << " to move!" << endl;
         board.printBoard();
         
