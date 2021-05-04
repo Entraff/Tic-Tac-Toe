@@ -4,12 +4,18 @@
 #include <vector>
 #include "type.h"
 
+enum BoardState {
+    DRAW, WIN, PLAYING
+};
+
 class Board {
     private:
         Cell player;
         std::vector<std::vector<Cell>> board; 
 
         void printRow(const std::vector<Cell>& row);
+        bool checkDraw();
+        bool checkWin();
         // CheckWin() is a wrapper for the 3 fucntions below
         bool checkHorizontal();
         bool checkVertical();
@@ -21,11 +27,10 @@ class Board {
 
         void printBoard();
         bool isEmpty(const Move& move);
-        bool checkDraw();
         void alternatePlayer();
         char getPlayer();
         void makeMove(const Move& move);
-        bool checkWin();
+        BoardState getState();
 };
 
 #endif

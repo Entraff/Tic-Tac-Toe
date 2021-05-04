@@ -4,10 +4,15 @@
 
 int main() {
     Board board;
+    BoardState currentState;
     Move move;
     
     std::cout << "To make a move, please enter the row and then column of your move." << std::endl;
-    while (!board.checkWin()) {
+    while (true) {
+        currentState = board.getState();
+        // End the game loop if an ending position is found
+        if (currentState != PLAYING) break;
+
         board.alternatePlayer();
 
         std::cout << "Player " << board.getPlayer() << " to move!" << std::endl;
@@ -22,6 +27,15 @@ int main() {
 
         board.makeMove(move);
     }
-    std::cout << "Player " << board.getPlayer() << " has won the game!" << std::endl;
+
+    switch (currentState) {
+        case WIN:
+            std::cout << "Player " << board.getPlayer() << " has won the game!" << std::endl;
+            break;
+        case DRAW:
+            std::cout << "Draw! No one has won the game." << std::endl;
+            break;
+    }
+
     board.printBoard();
 }

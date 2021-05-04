@@ -89,3 +89,11 @@ bool Board::checkDiagnol() {
 bool Board::checkWin() {
     return checkHorizontal() || checkDiagnol() || checkVertical();
 }
+
+BoardState Board::getState() {
+    if (checkWin())
+        return WIN;
+    if (checkDraw())
+        return DRAW;
+    return PLAYING;
+}
