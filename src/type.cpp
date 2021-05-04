@@ -1,14 +1,14 @@
 #include "type.h"
 
-Move::Move(const int& row_, const int& column_):
-    row(row_),
-    column(column_)
-    {}
+Move::Move(const int& row_, const int& column_) {
+    this->row = row_;
+    this->column = column_;
+}
 
-Move::Move():
-    row(0),
-    column(0)
-    {}
+Move::Move() {
+    this->row = 0;
+    this->column = 0;
+}
 
 char cellToChar(const Cell& state) {
     switch(state) {
