@@ -9,7 +9,11 @@ using std::endl;
 int main() {
     int boardLength;
     cout << "Please enter how many units long you want the board to be" << endl;
-    cin >> boardLength;
+    while (true) {
+        cin >> boardLength;
+        if (boardLength >= 2) break;
+        else cout << "Please choose a length greater than or equal to 2" << endl;
+    } 
 
     BoardState currentState;
     Move move;
